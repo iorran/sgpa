@@ -1,0 +1,45 @@
+entity Application {
+	name String required minlength(4) maxlength(10)
+}
+
+entity Role {
+	name String required minlength(4) maxlength(20),
+	description String
+} 
+
+entity UseCase {
+	name String required minlength(4) maxlength(20),
+	description String
+} 
+
+entity Permission {
+	value Access required, 
+}
+
+entity Information {
+	name String required minlength(4) maxlength(30),
+	description String
+}
+
+entity InformationValue {
+	value String required
+} 
+
+entity PersonRole { 
+	key String required
+} 
+
+enum Access {
+	CREATE, READ, UPDATE, DELETE
+}
+
+relationship ManyToOne {
+	Role{application(name)} to Application,
+	UseCase{role(name)} to Role,
+	Permission{useCase(name)} to UseCase,
+	Information{role(name)} to Role,
+	InformationValue{information(name)} to Information,
+	PersonRole{role(name)} to Role
+	PersonRole{application(name)} to Application
+}
+
